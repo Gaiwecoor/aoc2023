@@ -1,3 +1,4 @@
+// I have to admit this replacement is based on someone else's idea.
 const digits = {
   //zero: 0,
   one: "o1e",
