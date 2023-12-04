@@ -288,7 +288,15 @@ class USet extends Set {
     }
     return false;
   }
-    
+  
+  intersect(other) {
+    const intersected = new this.constructor();
+    for (const item of this) {
+      if (other.has(item)) intersected.add(item);
+    }
+    return intersected;
+  }
+  
   map(fn) {
     const mapped = new this.constructor();
     for (const item of this) {
@@ -408,10 +416,19 @@ class Node {
   }
 }
 
+/***********************
+**  COMMON FUNCTIONS  **
+***********************/
+
+function parseIntArray(n) {
+  return parseInt(n, 10);
+}
+
 module.exports = {
   Grid,
   Link,
   Node,
+  parseIntArray,
   Point,
   UMap,
   USet,
