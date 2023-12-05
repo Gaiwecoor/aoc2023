@@ -1,4 +1,4 @@
-const { Grid, USet } = require("../utils");
+const { Grid, USet, parseInt10 } = require("../utils");
 
 class Schematic extends Grid {
   constructor(data) {
@@ -7,7 +7,7 @@ class Schematic extends Grid {
   
   isPartNumber(x, y) {
     if (typeof x == "string") {
-      [ x, y ] = x.split(",").map(n => parseInt(n, 10));
+      [ x, y ] = x.split(",").map(parseInt10);
     }
     for (let i = x - 1; i <= x + 1; i++) {
       for (let j = y - 1; j <= y + 1; j++) {
@@ -21,7 +21,7 @@ class Schematic extends Grid {
   
   partNumber(x, y) {
     if (typeof x == "string") {
-      [ x, y ] = x.split(",").map(n => parseInt(n, 10));
+      [ x, y ] = x.split(",").map(parseInt10);
     }
     let num = "";
     let next = this.get(x, y);
@@ -30,11 +30,11 @@ class Schematic extends Grid {
       num += next.value;
       next = this.get(++x, y);
     }
-    return parseInt(num, 10);
+    return parseInt10(num);
   }
   
   gearValue(label) {
-    let [ x, y ] = label.split(",").map(n => parseInt(n, 10));
+    let [ x, y ] = label.split(",").map(parseInt10);
     let neighbors = new USet();
     for (let i = x - 1; i <= x + 1; i++) {
       for (let j = y - 1; j <= y + 1; j++) {
@@ -54,7 +54,7 @@ function setup(input) {
   for (let line of input.trim().split("\n")) {
     for (let x = 0; x < line.length; x++) {
       if (line[x] == ".") continue;
-      let num = parseInt(line[x], 10);
+      let num = parseInt10(line[x]);
       
       let left = schematic.get(x - 1, y);
       

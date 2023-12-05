@@ -1,3 +1,5 @@
+const { parseInt10 } = require("../utils");
+
 // I have to admit this replacement is based on someone else's idea.
 const digits = {
   //zero: 0,
@@ -19,7 +21,7 @@ function setup(input) {
 function part1(input) {
   let sum = 0;
   for (let line of input) {
-    let numbers = line.split("").map(n => parseInt(n, 10)).filter(n => !isNaN(n));
+    let numbers = line.split("").map(parseInt10).filter(n => !isNaN(n));
     sum += 10 * numbers[0] + numbers[numbers.length - 1];
   }
   return sum;
@@ -35,9 +37,8 @@ function part2(input, result) {
     for (const [rx, value] of regex) {
       line = line.replace(rx, value);
     }
-    let numbers = line.split("").map(n => parseInt(n, 10)).filter(n => !isNaN(n));
-    let add = 10 * numbers[0] + numbers[numbers.length - 1];
-    sum += add;
+    let numbers = line.split("").map(parseInt10).filter(n => !isNaN(n));
+    sum += 10 * numbers[0] + numbers[numbers.length - 1];
   }
   return sum;
 }

@@ -420,7 +420,8 @@ class Node {
 **  COMMON FUNCTIONS  **
 ***********************/
 
-function parseIntArray(n) {
+// Useful in mapping functions because it only accepts one argument
+function parseInt10(n) {
   return parseInt(n, 10);
 }
 
@@ -428,7 +429,7 @@ module.exports = {
   Grid,
   Link,
   Node,
-  parseIntArray,
+  parseInt10,
   Point,
   UMap,
   USet,

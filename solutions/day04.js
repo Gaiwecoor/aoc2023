@@ -1,4 +1,4 @@
-const { USet, parseIntArray } = require("../utils");
+const { USet, parseInt10 } = require("../utils");
 
 function setup(input) {
   input = input.trim().split("\n");
@@ -9,8 +9,8 @@ function setup(input) {
     let data = {
       card: parseInt(card, 10),
       count: 1,
-      win: new USet(win.trim().split(" ").map(parseIntArray)),
-      mine: new USet(mine.trim().split(" ").map(parseIntArray)),
+      win: new USet(win.trim().split(" ").map(parseInt10)),
+      mine: new USet(mine.trim().split(" ").map(parseInt10)),
       matches: undefined,
     };
     data.win.delete(NaN);
