@@ -100,14 +100,17 @@ class Link {
 class Point {
   constructor(x, y, value) {
     if (x.hasOwnProperty("x") && x.hasOwnProperty("y")) {
-      this.x = x.x;
-      this.y = x.y;
-      this.value = y;
-    } else {
-      this.x = x;
-      this.y = y;
-      this.value = value;
+      value = y;
+      y = x.y;
+      x = x.x;
     }
+    this.x = x;
+    this.y = y;
+    this.value = value;
+  }
+  
+  diff(other) {
+    return { x: this.x - other.x, y: this.y - other.y };
   }
   
   distanceTo(x, y) {
@@ -117,12 +120,49 @@ class Point {
       return Math.abs(this.x - x) + Math.abs(this.y - y);
   }
   
+  locEq(other) {
+    return (this.x == other.x && this.y == other.y);
+  }
+  
   get label() {
     return `${this.x},${this.y}`;
   }
   
+  offset(x, y, value) {
+    if (x.hasOwnProperty("x") && x.hasOwnProperty("y")) {
+      value = y;
+      y = x.y;
+      x = x.x;
+    }
+    return new this.constructor(this.x + x, this.y + y, value);
+  }
+  
   valueOf() {
     return this.value;
+  }
+}
+
+class TextMap extends Array {
+  constructor(data) {
+    if (typeof data == "string") data = data.trim().split("\n");
+    super(...data);
+  }
+  
+  find(char) {
+    for (let y = 0; y < this.length; y++) {
+      let x = this[y].indexOf(char);
+      if (x < 0) continue;
+      return { x, y };
+    }
+  }
+  
+  get(x, y) {
+    if (x.hasOwnProperty("x") && x.hasOwnProperty("y")) {
+      y = x.y;
+      x = x.x;
+    }
+    if (y < 0 || x < 0) return undefined;
+    return this[y][x];
   }
 }
 
@@ -222,6 +262,13 @@ class UMap extends Map {
 class USet extends Set {
   constructor(value) {
     super(value);
+  }
+  
+  addAll(items) {
+    for (const item of items) {
+      this.add(item);
+    }
+    return this;
   }
   
   clone() {
@@ -431,6 +478,7 @@ module.exports = {
   Node,
   parseInt10,
   Point,
+  TextMap,
   UMap,
   USet,
 };
