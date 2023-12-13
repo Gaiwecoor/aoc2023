@@ -148,6 +148,11 @@ class TextMap extends Array {
     super(...data);
   }
   
+  column(x) {
+    if (x < 0 || x >= this.x) return undefined;
+    return this.map(line => line[x]).join("");
+  }
+  
   find(char) {
     for (let y = 0; y < this.length; y++) {
       let x = this[y].indexOf(char);
@@ -163,6 +168,19 @@ class TextMap extends Array {
     }
     if (y < 0 || x < 0) return undefined;
     return this[y][x];
+  }
+  
+  row(y) {
+    if (y < 0 || y >= this.length) return undefined;
+    return this[y];
+  }
+  
+  get x() {
+    return this[0].length;
+  }
+  
+  get y() {
+    return this.length;
   }
 }
 
