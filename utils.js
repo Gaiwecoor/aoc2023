@@ -170,6 +170,14 @@ class TextMap extends Array {
     return this[y][x];
   }
   
+  map(fn) {
+    const mapped = new Array(this.length);
+    for (let i = 0; i < this.length; i++) {
+      mapped[i] = fn(this[i], i, this);
+    }
+    return mapped;
+  }
+  
   row(y) {
     if (y < 0 || y >= this.length) return undefined;
     return this[y];
@@ -485,6 +493,8 @@ class Node {
 **  COMMON FUNCTIONS  **
 ***********************/
 
+function noop() {};
+
 // Useful in mapping functions because it only accepts one argument
 function parseInt10(n) {
   return parseInt(n, 10);
@@ -494,6 +504,7 @@ module.exports = {
   Grid,
   Link,
   Node,
+  noop,
   parseInt10,
   Point,
   TextMap,
